@@ -12,7 +12,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<PostListPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                {/* <Route path='/register' element={<RegisterPage />} /> */}
+                <Route path='/register' element={<RegisterPage />} />
                 {/* <Route path='/write' element={<WritePage />} /> */}
                 {/* <Route path='/@:username' element={<GroupListPage/>} /> */}
                 {/* <Route path={'/:username'} element={<PostListPage />}  /> */}

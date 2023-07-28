@@ -44,6 +44,7 @@ const PostListContainer: React.FC = () => {
             loading={loading}
             error={error}
             posts={posts}
+            setPosts={setPosts}
             showWriteButton={user ? true : false}
         />
     );

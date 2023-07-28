@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
@@ -15,10 +15,10 @@ const GroupTemplateBlock = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`
+`;
 
 const WhiteBox = styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -37,8 +37,7 @@ const WhiteBox = styled.div`
     border-radius: 2px;
 `;
 
-
-const GroupTemplate = ({ children } : { children: ReactNode}) => {
+const GroupTemplate = ({ children }: { children: ReactNode }) => {
     return (
         <GroupTemplateBlock>
             <WhiteBox>
@@ -51,4 +50,4 @@ const GroupTemplate = ({ children } : { children: ReactNode}) => {
     );
 };
 
-export default GroupTemplate
+export default GroupTemplate;

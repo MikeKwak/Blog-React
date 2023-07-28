@@ -12,14 +12,22 @@ const GroupListContainer: React.FC = () => {
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<boolean>(false);
-    // const { user } = useContext(UserContext);
+
+    const deleteGroup = (id: string) => {
+        axios
+            .post<string>('/api/groups/leave', { groupID: id })
+            .then(() =>
+                setGroups(groups.filter((group) => group.groupID !== id)),
+            )
+            .catch((e) => console.log(e));
+    };
 
     useEffect(() => {
         setLoading(true);
         axios
             .get<Group[]>('/api/groups')
             .then((response) => {
-                setGroups(response.data); // Update the state with the fetched posts
+                setGroups(response.data); 
                 setLoading(false);
             })
             .catch((error) => {
@@ -36,8 +44,9 @@ const GroupListContainer: React.FC = () => {
                 error={error}
                 groups={groups}
                 setGroups={setGroups}
-            />;
-                
+                deleteGroup={deleteGroup}
+            />
+            ;
         </>
     );
 };

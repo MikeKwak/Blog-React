@@ -56,7 +56,7 @@ const RegisterFormContainer = () => {
             const user = response.data;
             console.log(user);
 
-            navigate('/')
+            navigate(`/${username}/groups`);
             try {
                 localStorage.setItem('user', JSON.stringify(user));
             } catch (e) {

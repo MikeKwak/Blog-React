@@ -18,13 +18,12 @@ const JoinForm: React.FC<JoinFormProps> = ({ setGroups }) => {
         password: '',
     });
 
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     
-        axios.post('/api/groups', formData).then((response) => {
-            setGroups(response.data);
-
+        axios.post<Group>('/api/groups/join', formData)
+        .then((response) => {
+            setGroups((prevGroups) => [ ...prevGroups, response.data]);
         }).catch((error) => {
             console.error('Error fetching groups:', error);
         })
@@ -41,12 +40,13 @@ const JoinForm: React.FC<JoinFormProps> = ({ setGroups }) => {
                         autoComplete="groupID"
                         name="groupID"
                         placeholder="groupID"
+                        onChange={handleChange}
                         value={formData.groupID}
                     />
                     <input
                         autoComplete="password"
                         name="password"
-                        placeholder="name"
+                        placeholder="password"
                         onChange={handleChange}
                         value={formData.password}
                     />
