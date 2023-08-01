@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
@@ -10,6 +10,7 @@ import { Post } from '../../containers/posts/PostListContainer';
 import CreatePostModal from './CreatePostModal';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { UserContext } from '../../containers/auth/UserContext';
 
 const PostListBlock = styled(Responsive)`
     position: relative;
@@ -54,16 +55,15 @@ const CompletedButton = styled(Button)`
     }
 `
 
-
-
 type PostItemProps = {
     post : Post
     handleCompletePost : (_id : string) => void
 }
 
 const PostItem: React.FC<PostItemProps> = ({ post, handleCompletePost }) => {
-    const { publishedDate, user, tags, title, body, _id } = post;
-    const username = user.username;
+    const { publishedDate, tags, title, body, _id } = post;
+    const username = post.user.username;
+    const { user } = useContext(UserContext)
 
     return (
         <PostItemBlock>
@@ -76,9 +76,9 @@ const PostItem: React.FC<PostItemProps> = ({ post, handleCompletePost }) => {
             />
             <Tags tags={tags} />
             <p>{body}</p>
-            <CompletedButton onClick={() => handleCompletePost(_id)}>
+            {(user && user.username === username) ? (<CompletedButton onClick={() => handleCompletePost(_id)}>
                 Complete
-            </CompletedButton>
+            </CompletedButton>) : (<></>)}
         </PostItemBlock>
     );
 };
@@ -96,11 +96,10 @@ const PostList: React.FC<PostListProps> = ({ posts, setPosts, loading, error, sh
     const { groupID } = useParams();
 
     if (error) {
-        return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
+        return <PostListBlock>Error : User / Group not selected</PostListBlock>;
     }
 
     const handleCompletePost = (_id : string) => {
-        console.log("gay")
         axios.delete(`/api/posts/${groupID}/${_id}`).then(() => {
             setPosts(posts.filter((post) => (post._id !== _id)))
         })

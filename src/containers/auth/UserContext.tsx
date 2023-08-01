@@ -1,21 +1,15 @@
 import { createContext, useState } from 'react';
 
-export interface User {
-    _id: String;
+export type User = {
+    _id: string;
     username: string;
     groups?: {
         _id: string;
         name: string;
     }[];
-}
-
-// Define the default user object
-export const defaultUser: User = {
-    _id: '',
-    username: '',
 };
 
-// Create the context with an initial value
+// Create the context with an initial value of null
 export const UserContext = createContext<{
     user: User | null;
     setUser: (user: User | null) => void;

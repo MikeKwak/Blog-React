@@ -1,8 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useContext, ChangeEvent, FormEvent, useState } from 'react';
 import AuthForm from '../../components/auth/AuthForm';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React, { useContext } from 'react';
 import { UserContext } from './UserContext';
 
 type LoginForm = {

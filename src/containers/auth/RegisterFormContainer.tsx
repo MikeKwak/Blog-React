@@ -1,7 +1,8 @@
-import { ChangeEvent, FormEvent,  useState } from 'react';
+import { ChangeEvent, FormEvent,  useState, useContext } from 'react';
 import AuthForm from '../../components/auth/AuthForm';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from './UserContext';
 
 
 
@@ -18,7 +19,7 @@ const RegisterFormContainer = () => {
         passwordConfirm: '',
     })
     const [ error, setError ] = useState("")
-    const [ auth, setAuth ] = useState(false);
+    const { setUser } = useContext(UserContext)
 
     const navigate = useNavigate();
     
@@ -55,13 +56,10 @@ const RegisterFormContainer = () => {
             const response = await axios.post('/api/auth/register', { username, password });
             const user = response.data;
             console.log(user);
+            setUser(user)
 
             navigate(`/${username}/groups`);
-            try {
-                localStorage.setItem('user', JSON.stringify(user));
-            } catch (e) {
-                console.log('localStorage not working')
-            }
+            
         } catch (e : any) {
             if(e.response.status === 400){
                 setError("Username too long or short")

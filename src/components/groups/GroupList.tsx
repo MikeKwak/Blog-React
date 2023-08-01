@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
-import { Link } from 'react-router-dom';
-import { Group } from '../../containers/groups/GroupListContainer';
+import { Link, useNavigate } from 'react-router-dom';
+import { Group, GroupContext } from '../../containers/groups/GroupContext';
 import CreateForm from './CreateForm';
 import JoinForm from './JoinForm';
 import { UserContext } from '../../containers/auth/UserContext';
@@ -65,18 +65,23 @@ type GroupItemProps = {
 
 const GroupItem: React.FC<GroupItemProps> = ({ group, deleteGroup }) => {
     const { user } = useContext(UserContext);
+    const { setGroup } = useContext(GroupContext);
     const { name, groupID } = group;
 
-    const handleDeleteGroup = () => {
-        
+    const navigate = useNavigate();
+
+    const handleDeleteGroup = () => { 
         deleteGroup(groupID)
-        
     };
+
+    const handleSelectGroup = () => {
+        setGroup(group)
+    }
 
     const username = user?.username || 'guest';
     return (
         <GroupItemBlock>
-            <GroupLink to={`/${username}/${groupID}`}>{name}</GroupLink>
+            <GroupLink to={`/${username}/${groupID}`} onClick={handleSelectGroup}>{name}</GroupLink>
             <DeleteButton onClick={handleDeleteGroup}>
                 <FontAwesomeIcon icon={faTrashAlt} />
             </DeleteButton>

@@ -2,11 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import GroupList from '../../components/groups/GroupList';
 import axios from 'axios'; // Import Axios
 import { UserContext } from '../auth/UserContext';
+import { Group } from './GroupContext';
 
-export type Group = {
-    groupID: string;
-    name: string;
-};
 
 const GroupListContainer: React.FC = () => {
     const [groups, setGroups] = useState<Group[]>([]);
@@ -23,6 +20,7 @@ const GroupListContainer: React.FC = () => {
     };
 
     useEffect(() => {
+        console.log("groups/useEffect");
         setLoading(true);
         axios
             .get<Group[]>('/api/groups')
@@ -35,6 +33,9 @@ const GroupListContainer: React.FC = () => {
                 setError(true);
                 setLoading(false);
             });
+            return () => {
+                console.log('컴포넌트가 화면에서 사라짐');
+              };
     }, []);
 
     return (

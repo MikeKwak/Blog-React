@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PostList from '../../components/posts/PostList';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import { UserContext } from '../auth/UserContext';
 import { useParams } from 'react-router-dom';
 
