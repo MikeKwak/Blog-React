@@ -4,10 +4,10 @@ import Responsive from './Responsive';
 import Button from './Button';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
-import { User } from '../../containers/auth/UserContext';
+import { User } from '../../contexts/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
-import { GroupContext } from '../../containers/groups/GroupContext';
+import { GroupContext } from '../../contexts/GroupContext';
 
 const HeaderBlock = styled.div`
     position: fixed;

@@ -1,34 +1,51 @@
 import MessagesReceived from './MessagesReceived';
 import { styled } from 'styled-components';
-import SendMessage from './SendMessage'
+import SendMessage from './SendMessage';
 import io, { Socket } from 'socket.io-client';
 import { useContext } from 'react';
-import { UserContext } from '../../containers/auth/UserContext';
-import { GroupContext } from '../../containers/groups/GroupContext';
-
-
+import { UserContext } from '../../contexts/UserContext';
+import { GroupContext } from '../../contexts/GroupContext';
 
 const ChatBlock = styled.div`
-    max-width: 1100px;
-    margin: 0 auto;
+    width: 700px;
+    height: 600px;
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    
+    grid-template-rows: 8fr 1fr;
     gap: 20px;
+
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 `;
 
 const Chat: React.FC = () => {
-    const socket : Socket = io('http://localhost:4000');
+    const socket: Socket = io('http://localhost:4000');
 
-    const { user } = useContext(UserContext)
-    const { group } = useContext(GroupContext)
-    const roomId = group.groupID;
+    const { user } = useContext(UserContext);
+    const { group } = useContext(GroupContext);
+  
 
-    socket.emit('join_room', { roomId });
+    if (!user || !group) {
+        // Render a loading state or handle the case when user or group is null
+        return <div>Loading...</div>;
+    }
+
+    socket.emit('join_room', group);
 
     return (
         <ChatBlock>
-            <MessagesReceived socket={socket} />;
-            <SendMessage socket={socket} username={user!.username} groupID={roomId}></SendMessage>
+            <MessagesReceived socket={socket} />
+            <SendMessage
+                socket={socket}
+                username={user!.username}
+                groupID={group!.groupID}
+            ></SendMessage>
         </ChatBlock>
     );
 };

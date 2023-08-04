@@ -5,11 +5,13 @@ import { Socket } from "socket.io-client";
 import axios from "axios";
 
 const SendMessageBlock = styled.div`
-    
+
+    display: grid;
+    grid-template-columns: 7fr 1fr;
 `
 
 const MessageInput = styled.input`
-    
+    margin: 10px;
 `
 
 type SendMessageProps = {

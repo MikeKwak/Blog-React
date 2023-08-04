@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import styled from 'styled-components';
-import { Group } from '../../containers/groups/GroupContext';
+import { Group } from '../../contexts/GroupContext';
 import Button from '../common/Button';
 import axios from 'axios';
 

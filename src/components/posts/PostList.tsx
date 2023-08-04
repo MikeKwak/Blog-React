@@ -10,7 +10,7 @@ import { Post } from '../../containers/posts/PostListContainer';
 import CreatePostModal from './CreatePostModal';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { UserContext } from '../../containers/auth/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 
 const PostListBlock = styled(Responsive)`
     position: relative;

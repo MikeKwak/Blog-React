@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import GroupList from '../../components/groups/GroupList';
 import axios from 'axios'; // Import Axios
-import { UserContext } from '../auth/UserContext';
-import { Group } from './GroupContext';
+import { UserContext } from '../../contexts/UserContext';
+import { Group } from '../../contexts/GroupContext';
+import * as groupAPI from '../../lib/api/groups'
 
 
 const GroupListContainer: React.FC = () => {
@@ -11,8 +12,8 @@ const GroupListContainer: React.FC = () => {
     const [error, setError] = useState<boolean>(false);
 
     const deleteGroup = (id: string) => {
-        axios
-            .post<string>('/api/groups/leave', { groupID: id })
+        //API call
+        groupAPI.leave(id)
             .then(() =>
                 setGroups(groups.filter((group) => group.groupID !== id)),
             )

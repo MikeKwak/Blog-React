@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { Group, GroupContext } from '../../containers/groups/GroupContext';
+import { Group, GroupContext } from '../../contexts/GroupContext';
 import CreateForm from './CreateForm';
 import JoinForm from './JoinForm';
-import { UserContext } from '../../containers/auth/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 

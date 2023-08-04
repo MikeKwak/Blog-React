@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { UserProvider } from './containers/auth/UserContext';
-import { GroupProvider } from './containers/groups/GroupContext';
+import { UserProvider } from './contexts/UserContext';
+import { GroupProvider } from './contexts/GroupContext';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement,
 );
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <UserProvider>
             <GroupProvider>
                 <BrowserRouter>
@@ -18,5 +18,5 @@ root.render(
                 </BrowserRouter>
             </GroupProvider>
         </UserProvider>
-    </React.StrictMode>,
+    // </React.StrictMode>,
 );

@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 
-interface AuthFormProps {
+type AuthFormProps = {
     type: 'login' | 'register';
     form: {
         username: string;
         password: string;
-        passwordConfirm?: string; // PasswordConfirm is optional for 'register' type
+        passwordConfirm?: string; 
     };
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     onSubmit: (e: FormEvent<HTMLFormElement>) => void;

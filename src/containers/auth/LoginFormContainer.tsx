@@ -1,13 +1,13 @@
 import { useContext, ChangeEvent, FormEvent, useState } from 'react';
 import AuthForm from '../../components/auth/AuthForm';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { UserContext } from './UserContext';
+import { User, UserContext } from '../../contexts/UserContext';
+import * as authAPI from '../../lib/api/auth';
 
 type LoginForm = {
     username: string;
     password: string;
-}
+};
 
 const LoginFormContainer = () => {
     const [form, setForm] = useState<LoginForm>({
@@ -15,8 +15,9 @@ const LoginFormContainer = () => {
         password: '',
     });
     const [error, setError] = useState('');
-    const navigate = useNavigate();
     const { setUser } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
@@ -27,7 +28,7 @@ const LoginFormContainer = () => {
         }));
     };
 
-    const onSubmit = async (e: FormEvent) => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         const { username, password } = form;
 
@@ -36,23 +37,25 @@ const LoginFormContainer = () => {
             return;
         }
 
-        try {
-            const response = await axios.post('/api/auth/login', {
-                username,
-                password,
-            });
-            const user = response.data;
-            console.log(user);
-            setUser(user);
+        //API call
+        authAPI.login({
+            username,
+            password,
+        })
+            .then((res: { data: User }) => {
 
-            navigate(`/${username}/groups`);
-        } catch (e: any) {
-            if (e.response.status === 401) {
-                setError('Unathorized');
-            } else if (e.response.status === 500) {
-                setError('Server Error : contact help');
-            }
-        }
+                //set UserContext
+                setUser(res.data);
+
+                navigate(`/${username}/groups`);
+            })
+            .catch((e: { response: { status: number } }) => {
+                if (e.response.status === 401) {
+                    setError('Unathorized');
+                } else if (e.response.status === 500) {
+                    setError('Server Error : contact help');
+                }
+            });
     };
     return (
         <AuthForm
